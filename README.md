@@ -26,12 +26,15 @@ My project consists of:
 
 ## Diagram
 
+![portfolio_website drawio](https://github.com/user-attachments/assets/e227fde4-de56-45d4-937d-1f31b301ec62)
+
+
 ## Deployment Steps
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/your-username/aws-cli-web-vpn-portfolio.git](https://github.com/your-username/aws-cli-web-vpn-portfolio.git)
-    cd aws-cli-web-vpn-portfolio
+    git clone https://github.com/MalikMamaev95/portfolio_website.git
+    cd portfolio_website
     ```
 
 2.  **Configure Variables:**
@@ -39,8 +42,8 @@ My project consists of:
 
 3.  **Execute the Setup Script:**
     ```bash
-    chmod +x setup.sh
-    ./setup.sh
+    chmod +x instance_setup.sh
+    ./instance_setup.sh
     ```
     This script will:
     * Create a new SSH key pair (`portfolio-website-key`).
@@ -51,7 +54,7 @@ My project consists of:
     * Wait for the instance to be running and then SSH into it to generate and download the OpenVPN client configuration (`client.ovpn`).
 
 4.  **The Web Server:**
-    Once the `setup.sh` script completes, the test page of the website should be accessible using the EIP. 
+    Once the `instance_setup.sh` script completes, the test page of the website should be accessible using the EIP. 
 
 5.  **Connect to the VPN Server:**
     * Import the `client.ovpn` file into your OpenVPN client.
