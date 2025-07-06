@@ -139,13 +139,30 @@ This will SSH to the EC2 instance and change the public IP to the EIP.
 
 ## Future Enhancements
 
-* Design webcontent and add it to the webserver.
+* ~Design webcontent and add it to the webserver.~
 * Implement a CD pipeline to automatically deploy changes to the web server.
 * Add monitoring and logging with AWS CloudWatch.
 * Integrate a custom domain name for the website.
 * Set up HTTPS for the web server using Let's Encrypt.
 
----
+1. **Adding Webcontent:**
+The next step after finishing the infrastructure is adding webcontent to my webserver. For a simple and straightforward setup I have decided to use a Bootstrap template and add it to my `/var/www/html` directory.
+
+To avoid permission issues I first scp'd the template files to the home dir and then cp'd them to html directory.
+
+```
+scp -r -i "SSH-KEY" TEMPLATEFILE ubuntu@IP:/home/ubuntu
+sudo cp -r TEMPLATEFILE/* /var/www/html
+```
+
+
+
+
+
+
+
+
+
 
 
 
