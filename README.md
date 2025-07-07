@@ -145,8 +145,8 @@ This will SSH to the EC2 instance and change the public IP to the EIP.
 * ~Design webcontent and add it to the webserver.~
 * Implement a CD pipeline to automatically deploy changes to the web server.
 * Add monitoring and logging with AWS CloudWatch.
-* Integrate a custom domain name for the website.
-* Set up HTTPS for the web server using Let's Encrypt.
+* ~Integrate a custom domain name for the website.~
+* ~Set up HTTPS for the web server using Let's Encrypt.~
 
 1. **Adding Webcontent:**
 The next step after finishing the infrastructure is adding webcontent to my webserver. For a simple and straightforward setup I have decided to use a Bootstrap template and add it to my `/var/www/html` directory.
@@ -157,7 +157,40 @@ To avoid permission issues I first scp'd the template files to the home dir and 
 scp -r -i "SSH-KEY" TEMPLATEFILE ubuntu@IP:/home/ubuntu
 sudo cp -r TEMPLATEFILE/* /var/www/html
 ```
+2. **Integrating a Custom Domain Name:**
+For a custom domain name, I have decided to use AWS Route 53. I created an A record that points to my EIP and added it to my hosted zone on AWS. Then I configured Nginx with the domain names:
 
+```
+sudo nano /etc/nginx/sites-available/malikmamaev.com.conf
+```
+
+```
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name malikmamaev.com www.malikmamaev.com;
+
+    root /var/www/html;
+    index index.html index.htm; # Pas dit aan indien nodig
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+```
+sudo ln -s /etc/nginx/sites-available/malikmamaev.com.conf /etc/nginx/sites-enabled/
+sudo systemctl reload nginx
+```
+
+3. **Adding HTTPS:**
+```
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d malikmamaev.com -d www.malikmamaev.com
+```
 
 
 
